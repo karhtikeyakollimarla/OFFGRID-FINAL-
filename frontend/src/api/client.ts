@@ -1,6 +1,17 @@
 import { Complaint, ComplaintMapItem, StatsData } from '../types';
 
-const BASE_URL = '/api';
+export const API_HOST = (
+  import.meta.env.VITE_API_URL || 'https://offgrid-final-8re0ekkpc-karhtikeyakollimarla.vercel.app'
+).replace(/\/$/, '');
+
+export const BASE_URL = `${API_HOST}/api`;
+
+export function getAssetUrl(path?: string | null): string {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${API_HOST}${cleanPath}`;
+}
 
 export async function fetchStats(): Promise<StatsData> {
   const res = await fetch(`${BASE_URL}/stats`);

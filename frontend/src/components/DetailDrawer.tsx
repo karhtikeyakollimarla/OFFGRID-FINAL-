@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Complaint, Urgency, Category, ComplaintStatus } from '../types';
-import { updateComplaint, resendComplaintEmail } from '../api/client';
+import { updateComplaint, resendComplaintEmail, getAssetUrl } from '../api/client';
 import { UrgencyBadge } from './UrgencyBadge';
 import { StatusBadge } from './StatusBadge';
 import { LocationPickerMap } from './LocationPickerMap';
@@ -245,12 +245,12 @@ export const DetailDrawer: React.FC<DetailDrawerProps> = ({
                   <div className="mt-2">
                     <span className="text-[11px] font-semibold text-slate-500 block mb-1">Attached Photo:</span>
                     <a
-                      href={complaint.photo_path}
+                      href={getAssetUrl(complaint.photo_path)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-block rounded border border-slate-300 overflow-hidden hover:opacity-85"
                     >
-                      <img src={complaint.photo_path} alt="Complaint Attachment" className="h-20 w-auto object-cover" />
+                      <img src={getAssetUrl(complaint.photo_path)} alt="Complaint Attachment" className="h-20 w-auto object-cover" />
                     </a>
                   </div>
                 )}

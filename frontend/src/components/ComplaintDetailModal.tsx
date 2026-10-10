@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Complaint, Urgency, Category, ComplaintStatus } from '../types';
-import { updateComplaint, reopenComplaint, dismissComplaint, resendComplaintEmail } from '../api/client';
+import { updateComplaint, reopenComplaint, dismissComplaint, resendComplaintEmail, getAssetUrl } from '../api/client';
 import { UrgencyBadge } from './UrgencyBadge';
 import { StatusBadge } from './StatusBadge';
 import { DepartmentBadge } from './DepartmentBadge';
@@ -481,7 +481,7 @@ export const ComplaintDetailModal: React.FC<ComplaintDetailModalProps> = ({
                     className="relative group cursor-pointer w-32 h-24 rounded-lg overflow-hidden border border-slate-200 bg-slate-100 hover:ring-2 hover:ring-[#14B8A6] transition-all"
                   >
                     <img
-                      src={complaint.photo_path}
+                      src={getAssetUrl(complaint.photo_path)}
                       alt="Complaint evidence"
                       className="w-full h-full object-cover"
                     />
@@ -1079,7 +1079,7 @@ export const ComplaintDetailModal: React.FC<ComplaintDetailModalProps> = ({
           >
             <div className="relative max-w-3xl max-h-[90vh]">
               <img
-                src={complaint.photo_path}
+                src={getAssetUrl(complaint.photo_path)}
                 alt="Complaint evidence expanded"
                 className="max-h-[85vh] max-w-full rounded-xl object-contain shadow-2xl border border-white/20"
               />

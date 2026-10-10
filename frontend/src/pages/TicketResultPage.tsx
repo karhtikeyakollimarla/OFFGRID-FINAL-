@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { fetchComplaintById } from '../api/client';
+import { fetchComplaintById, getAssetUrl } from '../api/client';
 import { Complaint } from '../types';
 import { UrgencyBadge } from '../components/UrgencyBadge';
 import { StatusBadge } from '../components/StatusBadge';
@@ -414,7 +414,7 @@ export const TicketResultPage: React.FC = () => {
                 </span>
                 <div className="inline-block border border-[#DCE4EC] rounded-md overflow-hidden bg-white shadow-2xs">
                   <img
-                    src={`/api/uploads/${complaint.photo_path}`}
+                    src={getAssetUrl(complaint.photo_path)}
                     alt="Citizen submitted evidence"
                     className="max-h-48 max-w-full object-contain"
                   />
