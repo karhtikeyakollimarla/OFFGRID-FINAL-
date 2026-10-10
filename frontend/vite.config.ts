@@ -12,14 +12,12 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'https://offgrid-final-8re0ekkpc-karhtikeyakollimarla.vercel.app',
-        changeOrigin: true,
-        secure: false
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true
       },
       '/uploads': {
-        target: 'https://offgrid-final-8re0ekkpc-karhtikeyakollimarla.vercel.app',
-        changeOrigin: true,
-        secure: false
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true
       }
     }
   }

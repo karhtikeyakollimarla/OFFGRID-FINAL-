@@ -64,13 +64,29 @@ app.add_middleware(
         "http://127.0.0.1:5173",
         "http://127.0.0.1:3000"
     ],
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Mount photo uploads directory
-app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
+# Mount photo uploads directory if it exists
+if UPLOAD_DIR.exists():
+    app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
+
+@app.on_event("startup")
+def startup_event():
+    from .database import SessionLocal
+    from .seed import seed_database
+    db = SessionLocal()
+    try:
+        if db.query(Complaint).count() == 0:
+            seed_database(db)
+            logger.info("Auto-seeded initial civic complaint dataset on cold start.")
+    except Exception as e:
+        logger.warning(f"Startup auto-seed check: {e}")
+    finally:
+        db.close()
 
 def generate_next_complaint_id(db: Session) -> str:
     """Generate sequential ID formatted as CIV-00001, CIV-00002, etc."""

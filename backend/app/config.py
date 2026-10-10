@@ -35,6 +35,15 @@ DEFAULT_MAP_CENTER_LAT = float(os.getenv("DEFAULT_MAP_CENTER_LAT", "28.6139"))
 DEFAULT_MAP_CENTER_LNG = float(os.getenv("DEFAULT_MAP_CENTER_LNG", "77.2090"))
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173").strip()
 
-DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{backend_dir / 'civic_ai.db'}")
-UPLOAD_DIR = backend_dir / "uploads"
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+is_vercel = bool(os.getenv("VERCEL"))
+if is_vercel:
+    DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:////tmp/civic_ai.db")
+    UPLOAD_DIR = Path(os.getenv("UPLOAD_DIR", "/tmp/uploads"))
+else:
+    DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{backend_dir / 'civic_ai.db'}")
+    UPLOAD_DIR = backend_dir / "uploads"
+
+try:
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+except Exception:
+    pass
